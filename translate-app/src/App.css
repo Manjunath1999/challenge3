@@ -29,11 +29,13 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  padding-top: 6rem;
+  align-items: flex-end;
+  padding-top: 4rem;
 }
 
 .tp-card{
-  width: 25rem;
+  width: 35rem;
+  height: 45rem;
   background-color: #394150 !important;
   border-radius: 10px !important;
 }
