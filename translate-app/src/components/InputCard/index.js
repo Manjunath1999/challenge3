@@ -7,12 +7,17 @@ import SoundIcon from "../../images/sound_max_fill.svg"
 import CopyIcon from "../../images/Copy.svg"
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
+import { Menu, MenuItem } from '@mui/material';
+import DropdownIcon from "../../images/Expand_down.svg"
 
 export default function InputCard(props) {
-    const { langArray, selectedOneLangText, selectedOneLang, rfcLangObj, convertText } = props
+    const { langArray, selectedOneLangText, selectedOneLang, rfcLangObj, convertText, loaderMadeFalse } = props
     const [inputText, setInputText] = useState("")
     const [langApi, setLangApi] = useState("")
     const [alertFlag, setAlertFlag] = useState(false)
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const [dropdownValue, setDropdownValue] = useState(langArray[3]);
 
     const handleInputChange = (e) => {
         setInputText(e.target.value);
@@ -31,11 +36,15 @@ export default function InputCard(props) {
     const handleTranslateApi = async () => {
         const outputCard = localStorage.getItem("value")
         let parsedValue = outputCard ? JSON.parse(outputCard) : ""
-        console.log(parsedValue);
         try {
+            loaderMadeFalse();
             const res = await fetch(`https://api.mymemory.translated.net/get?q=${inputText}&langpair=${selectedOneLang}|${parsedValue}`)
             const resJson = await res.json()
-            convertText(resJson?.responseData?.translatedText);
+            console.log("...........resJson" , resJson)
+            console.log("...........selectedOneLang" , selectedOneLang)
+            console.log("...........parsedValue" , parsedValue)
+            console.log("....................", resJson?.responseData?.translatedText)
+            convertText(resJson?.matches[1]?.translation);
         }
         catch (err) {
             console.log(err)
@@ -69,16 +78,57 @@ export default function InputCard(props) {
         }
     }
 
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleDropdownSelect = (b) => {
+        setAnchorEl(null);
+        handleselectedOneLangText(b);
+        setDropdownValue(b);
+    };
+
+    const firstThreeLangs = langArray.slice(0, 3);
+    const remainingLangs = langArray.slice(3);
+
 
     return (
         <Card className="tp-card">
             <div className="tp-sub-card">
                 <div className="tp-language">
-                    {langArray?.map((b) => {
+                    {firstThreeLangs?.map((b) => {
                         return (
                             <p className="tp-each-language" key={b} style={{ backgroundColor: selectedOneLang == b ? "#4D5562" : "", borderRadius: selectedOneLang == b ? "5px" : "0px", color: selectedOneLang == b ? "white" : "" }} onClick={() => handleselectedOneLangText(b)}>{b}</p>
                         )
                     })}
+                    {remainingLangs.length > 0 && (
+                        <>
+                            <p
+                                className="tp-each-language"
+                                key={dropdownValue}
+                                style={{
+                                    backgroundColor: selectedOneLang === dropdownValue ? "#4D5562" : "",
+                                    borderRadius: selectedOneLang === dropdownValue ? "5px" : "0px",
+                                    color: selectedOneLang === dropdownValue ? "white" : ""
+                                }}
+                                onClick={handleClick}
+                            >
+                                {dropdownValue}
+                                <img src={DropdownIcon} alt="icon" /> 
+                            </p>
+                            <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+                                {remainingLangs.map((b) => (
+                                    <MenuItem key={b}  onClick={() => handleDropdownSelect(b)}>
+                                        {b}
+                                    </MenuItem>
+                                ))}
+                            </Menu>
+                        </>
+                    )}
 
                 </div>
                 <hr className='horizontal-line' />
@@ -108,7 +158,7 @@ export default function InputCard(props) {
                         <img alt="soundIcon" className='box soundIcon' src={SoundIcon} onClick={handleTextToSpeech} />
                         <img alt="soundIcon" src={CopyIcon} onClick={handleCopyText} />
                     </div>
-                    <Button size="small" variant="contained" onClick={handleTranslate} disabled={inputText.length <= 0}>Translate</Button>
+                    <Button size="small" variant="contained" sx={{ textTransform: "none" }} onClick={handleTranslate} disabled={inputText.length <= 0}>Translate</Button>
                 </CardActions>
             </div>
             {alertFlag && <div className="alert-container">

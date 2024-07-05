@@ -6,16 +6,25 @@ import SoundIcon from "../../images/sound_max_fill.svg"
 import CopyIcon from "../../images/Copy.svg"
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
+import Loader from "../Loader"
+import { Menu, MenuItem } from '@mui/material';
+import DropdownIcon from "../../images/Expand_down.svg"
 
 export default function OutputCard(props) {
-    const { langArray, selectedTwoLangText, selectedTwoLang, translatedText } = props
+    const { langArray, selectedTwoLangText, selectedTwoLang, translatedText, loaderMadeTrue, loaderFlag } = props
     const [alertFlag, setAlertFlag] = useState(false)
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const [dropdownValue, setDropdownValue] = useState(langArray[3]);
 
     useEffect(() => {
         setTimeout(() => {
             setAlertFlag(false)
         }, 2000)
-    }, [alertFlag])
+        if (translatedText.length > 0) {
+            loaderMadeTrue()
+        }
+    }, [alertFlag, loaderFlag])
 
     const handleselectedTwoLangText = (b) => {
         selectedTwoLangText(b);
@@ -41,18 +50,57 @@ export default function OutputCard(props) {
         }
     }
 
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
 
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleDropdownSelect = (b) => {
+        setAnchorEl(null);
+        handleselectedTwoLangText(b);
+        setDropdownValue(b);
+    };
+
+    const firstThreeLangs = langArray.slice(0, 3);
+    const remainingLangs = langArray.slice(3);
 
 
     return (
         <Card className="tp-card">
             <div className="tp-sub-card">
                 <div className="tp-language">
-                    {langArray?.map((b) => {
+                    {firstThreeLangs?.map((b) => {
                         return (
                             <p className="tp-each-language" key={b} style={{ backgroundColor: selectedTwoLang == b ? "#4D5562" : "", borderRadius: selectedTwoLang == b ? "5px" : "0px", color: selectedTwoLang == b ? "white" : "" }} onClick={() => handleselectedTwoLangText(b)}>{b}</p>
                         )
                     })}
+                    {remainingLangs.length > 0 && (
+                        <>
+                            <p
+                                className="tp-each-language"
+                                key={dropdownValue}
+                                style={{
+                                    backgroundColor: selectedTwoLang === dropdownValue ? "#4D5562" : "",
+                                    borderRadius: selectedTwoLang === dropdownValue ? "5px" : "0px",
+                                    color: selectedTwoLang === dropdownValue ? "white" : ""
+                                }}
+                                onClick={handleClick}
+                            >
+                                {dropdownValue}
+                                <img src={DropdownIcon} alt="icon" /> 
+                            </p>
+                            <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+                                {remainingLangs.map((b) => (
+                                    <MenuItem key={b}  onClick={() => handleDropdownSelect(b)}>
+                                        {b}
+                                    </MenuItem>
+                                ))}
+                            </Menu>
+                        </>
+                    )}
                 </div>
                 <hr className='horizontal-line' />
                 <CardContent sx={{ padding: "0rem", height: "10rem" }}>
@@ -70,6 +118,9 @@ export default function OutputCard(props) {
                             borderBottom: 'none',
                         },
                     }} variant="standard" value={translatedText} />
+
+                    {!loaderFlag && translatedText?.length == 0 && <Loader />}
+
                 </CardContent>
                 <CardActions className='translate-style'>
                     <div>

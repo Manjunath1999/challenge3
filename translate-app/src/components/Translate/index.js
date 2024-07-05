@@ -1,13 +1,14 @@
-import React , { useState , useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import InputCard from "../InputCard";
 import OutputCard from "../OutputCard"
 
 export default function Translate() {
-    const [cardoneLangArray, setCardOneLangArray] = useState(["Detect Language", "English","French","Spanish"]);
-    const [cardtwoLangArray, setCardTwoLangArray] = useState(["English","French","Spanish", "Hindi"]);
+    const [cardoneLangArray, setCardOneLangArray] = useState(["English", "French", "Spanish", "Telugu", "Tamil", "Kannada", "Sanskrit", "Hindi"]);
+    const [cardtwoLangArray, setCardTwoLangArray] = useState(["English", "French", "Spanish", "Hindi","Kannada","Telugu"]);
     const [translatedText, setTranslatedText] = useState("");
     const [selectedOneLang, setSelectedOneLang] = useState("English")
     const [selectedTwoLang, setSelectedTwoLang] = useState("French")
+    const [loaderFlag, setLoaderFlag] = useState(true)
 
 
     var rfcLangObj = [
@@ -31,29 +32,56 @@ export default function Translate() {
             value: "Hindi",
             rfcValue: "hi"
         },
+        {
+            id: 5,
+            value: "Telugu",
+            rfcValue: "te"
+        },
+        {
+            id: 6,
+            value: "Tamil",
+            rfcValue: "ta"
+        },
+        {
+            id: 7,
+            value: "Kannada",
+            rfcValue: "kan"
+        },
+        {
+            id: 8,
+            value: "Sanskrit",
+            rfcValue: "sa"
+        },
     ]
 
-    const convertText = (e) => {
+    const convertText = useCallback((e) => {
         setTranslatedText(e)
-    }
+    }, [translatedText])
 
     const selectedOneLangText = (e) => {
         setSelectedOneLang(e)
     }
 
+    const loaderMadeTrue = () => {
+        setLoaderFlag(true)
+    }
+
+    const loaderMadeFalse = (e) => {
+        setLoaderFlag(false)
+    }
+
     const selectedTwoLangText = (e) => {
         setSelectedTwoLang(e)
         let rfcSelectedLang = rfcLangObj.filter((r) => r.value == e)
-        console.log("..........................", rfcSelectedLang[0]?.rfcValue)
-        localStorage.setItem("value",JSON.stringify(rfcSelectedLang[0]?.rfcValue))
+        localStorage.setItem("value", JSON.stringify(rfcSelectedLang[0]?.rfcValue))
     }
 
 
     return (
         <div className='tp-portal'>
             <div className='tp-sub-portal'>
-                <InputCard  langArray={cardoneLangArray} selectedOneLangText={selectedOneLangText} rfcLangObj={rfcLangObj} selectedOneLang={selectedOneLang} convertText={convertText}/>
-                <OutputCard langArray={cardtwoLangArray} selectedTwoLangText={selectedTwoLangText} rfcLangObj={rfcLangObj} selectedTwoLang={selectedTwoLang} translatedText={translatedText}/>
+                <InputCard langArray={cardoneLangArray} selectedOneLangText={selectedOneLangText} rfcLangObj={rfcLangObj} selectedOneLang={selectedOneLang} convertText={convertText} loaderMadeFalse={loaderMadeFalse} />
+                <OutputCard langArray={cardtwoLangArray} selectedTwoLangText={selectedTwoLangText} rfcLangObj={rfcLangObj} selectedTwoLang={selectedTwoLang} translatedText={translatedText} loaderMadeTrue={loaderMadeTrue} loaderFlag={loaderFlag} />
             </div>
         </div>
     )
