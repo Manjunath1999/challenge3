@@ -158,7 +158,7 @@ export default function InputCard(props) {
                         <img alt="soundIcon" className='box soundIcon' src={SoundIcon} onClick={handleTextToSpeech} />
                         <img alt="soundIcon" src={CopyIcon} onClick={handleCopyText} />
                     </div>
-                    <Button size="small" variant="contained" sx={{ textTransform: "none" }} onClick={handleTranslate} disabled={inputText.length <= 0}>Translate</Button>
+                    <Button size="small" variant="contained" className="button-style" onClick={handleTranslate} disabled={inputText.length <= 0}>Translate</Button>
                 </CardActions>
             </div>
             {alertFlag && <div className="alert-container">

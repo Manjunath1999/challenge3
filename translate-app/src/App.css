@@ -53,7 +53,7 @@
 .translate-style {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .box {}
@@ -245,6 +245,16 @@
   }
 }
 
+.button-style{
+  text-transform: none;
+}
+
+.button-style:disabled{
+  background-color: #6CB4EE !important;
+  opacity: 1;
+  color: white !important;
+}
+
 @media (max-width: 768px) {
   .tp-sub-portal {
     display: flex;
@@ -252,6 +262,7 @@
     justify-content: space-evenly;
     align-items: flex-end;
     height: 100%;
+    width: 90%;
   }
 
   .tp-card {
