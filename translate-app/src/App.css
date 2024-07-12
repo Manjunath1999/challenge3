@@ -19,49 +19,55 @@
   color: #61dafb;
 }
 
-.tp-portal{
+.tp-portal {
   width: 100%;
-  height: 60vh;
+  height: 100vh;
   background-image: url("../src/images/hero_img.jpg");
+  background-size: cover;
+  background-position: center;
+  position: relative;
 }
 
-.tp-sub-portal{
+.tp-sub-portal {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: flex-end;
-  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
 }
 
-.tp-card{
+.tp-card {
   width: 40%;
   background-color: #394150 !important;
   border-radius: 10px !important;
 }
 
-.tp-sub-card{
+.tp-sub-card {
   padding: 0.7rem;
 }
 
-.translate-style{
+.translate-style {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
 
-.box{
-}
+.box {}
 
-.soundIcon{
+.soundIcon {
   margin-right: 1rem;
 }
 
-.tp-language{
+.tp-language {
   display: grid;
   grid-auto-flow: column;
 }
 
-.tp-each-language{
+.tp-each-language {
   color: #4D5562;
   font-size: 0.8rem;
   font-weight: 600;
@@ -78,14 +84,14 @@
   margin: 1px;
 }
 
-.alert-container{
+.alert-container {
   display: inline;
   position: absolute;
   top: 5px;
   margin-left: 2rem;
 }
 
-.alert-output-container{
+.alert-output-container {
   position: absolute;
   top: 5px;
 }
@@ -103,13 +109,13 @@
   height: 100px;
   -webkit-perspective: 780px;
   perspective: 780px;
-  opacity: 1; /* Initially visible */
-  transition: opacity 0.5s ease; /* Smooth transition for opacity */
+  opacity: 1;
+  transition: opacity 0.5s ease;
 }
 
 .loader.hide {
   opacity: 0;
-  pointer-events: none; /* Disable pointer events when hidden */
+  pointer-events: none;
 }
 
 .loader-text {
@@ -118,8 +124,8 @@
   letter-spacing: 1.5px;
   font-size: 20px;
   font-weight: bold;
-  color: #cecece; /* Color of "Loading" text */
-  z-index: 10; /* Show on top */
+  color: #cecece;
+  z-index: 10;
 }
 
 .load-inner {
@@ -156,8 +162,8 @@
 }
 
 #content {
-  opacity: 0; /* Initially hidden */
-  transition: opacity 1.5s ease; /* Smooth transition for opacity */
+  opacity: 0;
+  transition: opacity 1.5s ease;
 }
 
 #content.show {
@@ -172,6 +178,7 @@
     -webkit-transform: rotateX(45deg) rotateY(-45deg) rotateZ(0deg);
     transform: rotateX(45deg) rotateY(-45deg) rotateZ(0deg);
   }
+
   100% {
     -webkit-transform: rotateX(45deg) rotateY(-45deg) rotateZ(360deg);
     transform: rotateX(45deg) rotateY(-45deg) rotateZ(360deg);
@@ -183,6 +190,7 @@
     -webkit-transform: rotateX(45deg) rotateY(-45deg) rotateZ(0deg);
     transform: rotateX(45deg) rotateY(-45deg) rotateZ(0deg);
   }
+
   100% {
     -webkit-transform: rotateX(45deg) rotateY(-45deg) rotateZ(360deg);
     transform: rotateX(45deg) rotateY(-45deg) rotateZ(360deg);
@@ -194,6 +202,7 @@
     -webkit-transform: rotateX(45deg) rotateY(45deg) rotateZ(0deg);
     transform: rotateX(45deg) rotateY(45deg) rotateZ(0deg);
   }
+
   100% {
     -webkit-transform: rotateX(45deg) rotateY(45deg) rotateZ(360deg);
     transform: rotateX(45deg) rotateY(45deg) rotateZ(360deg);
@@ -205,6 +214,7 @@
     -webkit-transform: rotateX(45deg) rotateY(45deg) rotateZ(0deg);
     transform: rotateX(45deg) rotateY(45deg) rotateZ(0deg);
   }
+
   100% {
     -webkit-transform: rotateX(45deg) rotateY(45deg) rotateZ(360deg);
     transform: rotateX(45deg) rotateY(45deg) rotateZ(360deg);
@@ -216,6 +226,7 @@
     -webkit-transform: rotateX(-60deg) rotateY(0deg) rotateZ(0deg);
     transform: rotateX(-60deg) rotateY(0deg) rotateZ(0deg);
   }
+
   100% {
     -webkit-transform: rotateX(-60deg) rotateY(0deg) rotateZ(360deg);
     transform: rotateX(-60deg) rotateY(0deg) rotateZ(360deg);
@@ -227,8 +238,30 @@
     -webkit-transform: rotateX(-60deg) rotateY(0deg) rotateZ(0deg);
     transform: rotateX(-60deg) rotateY(0deg) rotateZ(0deg);
   }
+
   100% {
     -webkit-transform: rotateX(-60deg) rotateY(0deg) rotateZ(360deg);
     transform: rotateX(-60deg) rotateY(0deg) rotateZ(360deg);
   }
+}
+
+@media (max-width: 768px) {
+  .tp-sub-portal {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-end;
+    height: 100%;
+  }
+
+  .tp-card {
+    width: 100%;
+  }
+
+  .tp-portal {
+    width: 100%;
+    background-image: url("../src/images/hero_img.jpg");
+  }
+
+
 }
