@@ -28,27 +28,25 @@
 .tp-sub-portal{
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  align-items: flex-end;
-  padding-top: 4rem;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
 }
 
 .tp-card{
-  width: 35rem;
-  height: 45rem;
+  width: 40%;
   background-color: #394150 !important;
   border-radius: 10px !important;
 }
 
 .tp-sub-card{
-  padding: 1rem;
-  height: 100%;
+  padding: 0.7rem;
 }
 
 .translate-style{
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .box{
