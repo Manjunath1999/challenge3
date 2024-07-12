@@ -40,11 +40,7 @@ export default function InputCard(props) {
             loaderMadeFalse();
             const res = await fetch(`https://api.mymemory.translated.net/get?q=${inputText}&langpair=${selectedOneLang}|${parsedValue}`)
             const resJson = await res.json()
-            console.log("...........resJson" , resJson)
-            console.log("...........selectedOneLang" , selectedOneLang)
-            console.log("...........parsedValue" , parsedValue)
-            console.log("....................", resJson?.responseData?.translatedText)
-            convertText(resJson?.matches[1]?.translation);
+            convertText(resJson?.responseData?.translatedText);
         }
         catch (err) {
             console.log(err)
