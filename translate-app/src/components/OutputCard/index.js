@@ -90,11 +90,11 @@ export default function OutputCard(props) {
                                 onClick={handleClick}
                             >
                                 {dropdownValue}
-                                <img src={DropdownIcon} alt="icon" /> 
+                                <img src={DropdownIcon} alt="icon" />
                             </p>
                             <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
                                 {remainingLangs.map((b) => (
-                                    <MenuItem key={b}  onClick={() => handleDropdownSelect(b)}>
+                                    <MenuItem key={b} onClick={() => handleDropdownSelect(b)}>
                                         {b}
                                     </MenuItem>
                                 ))}
@@ -123,9 +123,15 @@ export default function OutputCard(props) {
 
                 </CardContent>
                 <CardActions className='translate-style'>
-                    <div>
-                        <img alt="soundIcon" className='box soundIcon' src={SoundIcon} onClick={handleTextToSpeech} />
-                        <img alt="soundIcon" src={CopyIcon} onClick={handleCopyText} />
+                    <div style={{ display: "flex" }}>
+                        <div className="small-square small-square-space">
+                            <img alt="soundIcon" className='box soundIcon' src={SoundIcon} onClick={handleTextToSpeech} />
+                        </div>
+                        <div className="small-square">
+                            <img alt="soundIcon" className='box soundIcon' src={CopyIcon} onClick={handleCopyText} />
+                        </div>
+
+
                     </div>
                 </CardActions>
             </div>

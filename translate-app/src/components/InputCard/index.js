@@ -9,6 +9,7 @@ import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 import { Menu, MenuItem } from '@mui/material';
 import DropdownIcon from "../../images/Expand_down.svg"
+import TranslateIcon from '@mui/icons-material/Translate';
 
 export default function InputCard(props) {
     const { langArray, selectedOneLangText, selectedOneLang, rfcLangObj, convertText, loaderMadeFalse } = props
@@ -114,11 +115,11 @@ export default function InputCard(props) {
                                 onClick={handleClick}
                             >
                                 {dropdownValue}
-                                <img src={DropdownIcon} alt="icon" /> 
+                                <img src={DropdownIcon} alt="icon" />
                             </p>
                             <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
                                 {remainingLangs.map((b) => (
-                                    <MenuItem key={b}  onClick={() => handleDropdownSelect(b)}>
+                                    <MenuItem key={b} onClick={() => handleDropdownSelect(b)}>
                                         {b}
                                     </MenuItem>
                                 ))}
@@ -150,11 +151,17 @@ export default function InputCard(props) {
                     }} variant="standard" value={inputText} onChange={handleInputChange} />
                 </CardContent>
                 <CardActions className='translate-style'>
-                    <div>
-                        <img alt="soundIcon" className='box soundIcon' src={SoundIcon} onClick={handleTextToSpeech} />
-                        <img alt="soundIcon" src={CopyIcon} onClick={handleCopyText} />
+                    <div style={{display:"flex"}}>
+                        <div className="small-square small-square-space">
+                            <img alt="soundIcon" className='box soundIcon' src={SoundIcon} onClick={handleTextToSpeech} />
+                        </div>
+                        <div className="small-square">
+                            <img alt="soundIcon" className='box soundIcon' src={CopyIcon} onClick={handleCopyText} />
+                        </div>
+
+
                     </div>
-                    <Button size="small" variant="contained" className="button-style" onClick={handleTranslate} disabled={inputText.length <= 0}>Translate</Button>
+                    <Button size="small" variant="contained" className="button-style"  startIcon={<TranslateIcon/>} onClick={handleTranslate} disabled={inputText.length <= 0}>Translate</Button>
                 </CardActions>
             </div>
             {alertFlag && <div className="alert-container">
