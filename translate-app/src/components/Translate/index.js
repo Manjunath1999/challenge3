@@ -5,7 +5,7 @@ import OutputCard from "../OutputCard"
 export default function Translate() {
     const [cardoneLangArray, setCardOneLangArray] = useState(["English", "French", "Spanish", "Telugu", "Tamil", "Kannada", "Sanskrit", "Hindi"]);
     const [cardtwoLangArray, setCardTwoLangArray] = useState(["English", "French", "Spanish", "Hindi","Kannada","Telugu"]);
-    const [translatedText, setTranslatedText] = useState("");
+    const [translatedText, setTranslatedText] = useState(" ");
     const [selectedOneLang, setSelectedOneLang] = useState("English")
     const [selectedTwoLang, setSelectedTwoLang] = useState("French")
     const [loaderFlag, setLoaderFlag] = useState(true)
@@ -54,6 +54,12 @@ export default function Translate() {
         },
     ]
 
+    useEffect(() => {
+        window.onload = function() {
+            localStorage.clear();
+        };
+    },[])
+
     const convertText = useCallback((e) => {
         setTranslatedText(e)
     }, [translatedText])
@@ -80,7 +86,7 @@ export default function Translate() {
     return (
         <div className='tp-portal'>
             <div className='tp-sub-portal'>
-                <InputCard langArray={cardoneLangArray} selectedOneLangText={selectedOneLangText} rfcLangObj={rfcLangObj} selectedOneLang={selectedOneLang} convertText={convertText} loaderMadeFalse={loaderMadeFalse} />
+                <InputCard langArray={cardoneLangArray} selectedOneLangText={selectedOneLangText} rfcLangObj={rfcLangObj} selectedOneLang={selectedOneLang} selectedTwoLang={selectedTwoLang} convertText={convertText} loaderMadeFalse={loaderMadeFalse} />
                 <OutputCard langArray={cardtwoLangArray} selectedTwoLangText={selectedTwoLangText} rfcLangObj={rfcLangObj} selectedTwoLang={selectedTwoLang} translatedText={translatedText} loaderMadeTrue={loaderMadeTrue} loaderFlag={loaderFlag} />
             </div>
         </div>

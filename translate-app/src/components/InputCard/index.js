@@ -12,7 +12,7 @@ import DropdownIcon from "../../images/Expand_down.svg"
 import TranslateIcon from '@mui/icons-material/Translate';
 
 export default function InputCard(props) {
-    const { langArray, selectedOneLangText, selectedOneLang, rfcLangObj, convertText, loaderMadeFalse } = props
+    const { langArray, selectedOneLangText, selectedOneLang, selectedTwoLang, rfcLangObj, convertText, loaderMadeFalse } = props
     const [inputText, setInputText] = useState("")
     const [langApi, setLangApi] = useState("")
     const [alertFlag, setAlertFlag] = useState(false)
@@ -36,9 +36,10 @@ export default function InputCard(props) {
 
     const handleTranslateApi = async () => {
         const outputCard = localStorage.getItem("value")
-        let parsedValue = outputCard ? JSON.parse(outputCard) : ""
+        let parsedValue = outputCard ? JSON.parse(outputCard) : selectedTwoLang
         try {
             loaderMadeFalse();
+            console.log(".......inputText selectedOneLang parsedValue", inputText, selectedOneLang, parsedValue)
             const res = await fetch(`https://api.mymemory.translated.net/get?q=${inputText}&langpair=${selectedOneLang}|${parsedValue}`)
             const resJson = await res.json()
             convertText(resJson?.responseData?.translatedText);
